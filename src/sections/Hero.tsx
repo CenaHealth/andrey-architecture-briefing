@@ -43,7 +43,9 @@ export function Hero() {
             margin: '12px 0 0 0',
           }}
         >
-          Stop arguing platforms. Start naming layers.
+          Stop arguing platforms.
+          <br />
+          Start naming layers.
         </h1>
         <p
           style={{
