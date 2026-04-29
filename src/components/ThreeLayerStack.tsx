@@ -1,4 +1,6 @@
-type Props = { className?: string };
+import type { Lang } from '../i18n/content';
+
+type Props = { className?: string; lang: Lang };
 
 const sand900 = 'var(--color-sand-900)';
 const sand700 = 'var(--color-sand-700)';
@@ -14,18 +16,73 @@ const border = 'var(--color-border-default)';
 const fontSans = 'var(--font-sans)';
 const fontMono = 'var(--font-mono)';
 
-/**
- * Three-layer architecture diagram. Top: orchestration (Cena-owned).
- * Middle: execution (swappable). Bottom: surfaces (per-role).
- * Arrows show request flow up from surface and dispatch down through executors.
- */
-export function ThreeLayerStack({ className }: Props) {
+const txt = {
+  en: {
+    layer1: 'LAYER 1',
+    layer2: 'LAYER 2',
+    layer3: 'LAYER 3',
+    orchestration: 'Orchestration',
+    orchSubtitle: 'Triage · skill registry · expert dispatch · plans · memory · gating',
+    cenaOwned: 'CENA-OWNED',
+    execution: 'Execution',
+    swappable: 'SWAPPABLE',
+    llmApi: 'LLM API',
+    openclaw: 'OpenClaw',
+    code: 'Code · DB · APIs',
+    human: 'Human-in-the-loop',
+    surfaces: 'UX Surfaces',
+    patient: 'Patient',
+    provider: 'Provider',
+    kitchen: 'Kitchen partner',
+    cenaStaff: 'Cena staff',
+    public: 'Public',
+    bespoke: 'bespoke',
+    mixed: 'mixed',
+    slackFirst: 'slack-first',
+    web: 'web',
+    dispatch: 'dispatch',
+    request: 'request',
+    result: 'result',
+    caption: 'Surfaces send requests up · Orchestration dispatches across executors · Results return down',
+  },
+  ru: {
+    layer1: 'СЛОЙ 1',
+    layer2: 'СЛОЙ 2',
+    layer3: 'СЛОЙ 3',
+    orchestration: 'Оркестрация',
+    orchSubtitle: 'Сортировка · реестр навыков · эксперты · планы · память · шлюзование',
+    cenaOwned: 'ЗА CENA',
+    execution: 'Исполнение',
+    swappable: 'ВЗАИМОЗАМЕНЯЕМО',
+    llmApi: 'LLM API',
+    openclaw: 'OpenClaw',
+    code: 'Код · БД · API',
+    human: 'Человек в цикле',
+    surfaces: 'UX-поверхности',
+    patient: 'Пациент',
+    provider: 'Врач',
+    kitchen: 'Кухонный партнёр',
+    cenaStaff: 'Сотрудник Cena',
+    public: 'Публика',
+    bespoke: 'на заказ',
+    mixed: 'смешанная',
+    slackFirst: 'через slack',
+    web: 'web',
+    dispatch: 'отправка',
+    request: 'запрос',
+    result: 'результат',
+    caption: 'Поверхности шлют запросы вверх · Оркестрация распределяет по исполнителям · Результаты возвращаются вниз',
+  },
+} as const;
+
+export function ThreeLayerStack({ className, lang }: Props) {
+  const T = txt[lang];
   return (
     <svg
       className={className}
       viewBox="0 0 760 520"
       role="img"
-      aria-label="Three layers: orchestration on top, execution in the middle, UX surfaces at the bottom. Surfaces send requests up; orchestration dispatches down."
+      aria-label={T.caption}
       style={{ width: '100%', height: 'auto', display: 'block' }}
     >
       <defs>
@@ -44,171 +101,72 @@ export function ThreeLayerStack({ className }: Props) {
 
       {/* Layer 1 — Orchestration */}
       <g>
-        <rect
-          x="60"
-          y="40"
-          width="640"
-          height="100"
-          rx="14"
-          fill={teal700}
-          stroke={teal700}
-        />
-        <text
-          x="80"
-          y="68"
-          fontFamily={fontSans}
-          fontSize="11"
-          letterSpacing="2"
-          fill={teal100}
-        >
-          LAYER 1
+        <rect x="60" y="40" width="640" height="100" rx="14" fill={teal700} stroke={teal700} />
+        <text x="80" y="68" fontFamily={fontSans} fontSize="11" letterSpacing="2" fill={teal100}>
+          {T.layer1}
         </text>
-        <text
-          x="80"
-          y="98"
-          fontFamily={fontSans}
-          fontWeight="600"
-          fontSize="22"
-          fill="#ffffff"
-        >
-          Orchestration
+        <text x="80" y="98" fontFamily={fontSans} fontWeight="600" fontSize="22" fill="#ffffff">
+          {T.orchestration}
         </text>
-        <text
-          x="80"
-          y="120"
-          fontFamily={fontSans}
-          fontSize="13"
-          fill={teal100}
-        >
-          Triage · skill registry · expert dispatch · plans · memory · gating
+        <text x="80" y="120" fontFamily={fontSans} fontSize="13" fill={teal100}>
+          {T.orchSubtitle}
         </text>
         <g>
-          <rect
-            x="540"
-            y="56"
-            width="140"
-            height="28"
-            rx="14"
-            fill="rgba(255,255,255,0.18)"
-            stroke="rgba(255,255,255,0.4)"
-          />
-          <text
-            x="610"
-            y="74"
-            textAnchor="middle"
-            fontFamily={fontMono}
-            fontSize="11"
-            fill="#ffffff"
-            letterSpacing="1"
-          >
-            CENA-OWNED
+          <rect x="540" y="56" width="140" height="28" rx="14" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.4)" />
+          <text x="610" y="74" textAnchor="middle" fontFamily={fontMono} fontSize="11" fill="#ffffff" letterSpacing="1">
+            {T.cenaOwned}
           </text>
         </g>
       </g>
 
-      {/* Down arrow: orchestration → execution */}
-      <line
-        x1="380"
-        y1="146"
-        x2="380"
-        y2="184"
-        stroke={sand500}
-        strokeWidth="1.5"
-        markerEnd="url(#arrowhead)"
-      />
-      <text
-        x="394"
-        y="172"
-        fontFamily={fontSans}
-        fontSize="11"
-        fill={sand700}
-      >
-        dispatch
+      <line x1="380" y1="146" x2="380" y2="184" stroke={sand500} strokeWidth="1.5" markerEnd="url(#arrowhead)" />
+      <text x="394" y="172" fontFamily={fontSans} fontSize="11" fill={sand700}>
+        {T.dispatch}
       </text>
 
       {/* Layer 2 — Execution */}
       <g>
-        <rect
-          x="60"
-          y="190"
-          width="640"
-          height="120"
-          rx="14"
-          fill={sand100}
-          stroke={border}
-        />
-        <text
-          x="80"
-          y="218"
-          fontFamily={fontSans}
-          fontSize="11"
-          letterSpacing="2"
-          fill={sand500}
-        >
-          LAYER 2
+        <rect x="60" y="190" width="640" height="120" rx="14" fill={sand100} stroke={border} />
+        <text x="80" y="218" fontFamily={fontSans} fontSize="11" letterSpacing="2" fill={sand500}>
+          {T.layer2}
         </text>
-        <text
-          x="80"
-          y="244"
-          fontFamily={fontSans}
-          fontWeight="600"
-          fontSize="20"
-          fill={sand900}
-        >
-          Execution
+        <text x="80" y="244" fontFamily={fontSans} fontWeight="600" fontSize="20" fill={sand900}>
+          {T.execution}
         </text>
 
-        {/* Executor cells */}
         <g>
           <rect x="80" y="260" width="135" height="36" rx="8" fill="#ffffff" stroke={border} />
           <text x="147.5" y="284" textAnchor="middle" fontFamily={fontSans} fontSize="13" fill={sand900}>
-            LLM API
+            {T.llmApi}
           </text>
         </g>
         <g>
           <rect x="225" y="260" width="135" height="36" rx="8" fill="#ffffff" stroke={teal200} strokeWidth="1.5" />
           <text x="292.5" y="284" textAnchor="middle" fontFamily={fontSans} fontSize="13" fill={sand900}>
-            OpenClaw
+            {T.openclaw}
           </text>
         </g>
         <g>
           <rect x="370" y="260" width="135" height="36" rx="8" fill="#ffffff" stroke={border} />
           <text x="437.5" y="284" textAnchor="middle" fontFamily={fontSans} fontSize="13" fill={sand900}>
-            Code · DB · APIs
+            {T.code}
           </text>
         </g>
         <g>
           <rect x="515" y="260" width="165" height="36" rx="8" fill="#ffffff" stroke={border} />
           <text x="597.5" y="284" textAnchor="middle" fontFamily={fontSans} fontSize="13" fill={sand900}>
-            Human-in-the-loop
+            {T.human}
           </text>
         </g>
 
         <g>
-          <rect
-            x="540"
-            y="206"
-            width="140"
-            height="28"
-            rx="14"
-            fill={sand50}
-            stroke={border}
-          />
-          <text
-            x="610"
-            y="224"
-            textAnchor="middle"
-            fontFamily={fontMono}
-            fontSize="11"
-            fill={sand700}
-            letterSpacing="1"
-          >
-            SWAPPABLE
+          <rect x="500" y="206" width="180" height="28" rx="14" fill={sand50} stroke={border} />
+          <text x="590" y="224" textAnchor="middle" fontFamily={fontMono} fontSize="11" fill={sand700} letterSpacing="1">
+            {T.swappable}
           </text>
         </g>
       </g>
 
-      {/* Up arrow: surface → orchestration (curving along the right) */}
       <path
         d="M 718 410 C 738 410 738 200 718 200"
         fill="none"
@@ -226,110 +184,71 @@ export function ThreeLayerStack({ className }: Props) {
         transform="rotate(-90 730 305)"
         textAnchor="middle"
       >
-        request
+        {T.request}
       </text>
 
-      {/* Down arrow: execution → surface */}
-      <line
-        x1="380"
-        y1="316"
-        x2="380"
-        y2="354"
-        stroke={sand500}
-        strokeWidth="1.5"
-        markerEnd="url(#arrowhead)"
-      />
-      <text
-        x="394"
-        y="342"
-        fontFamily={fontSans}
-        fontSize="11"
-        fill={sand700}
-      >
-        result
+      <line x1="380" y1="316" x2="380" y2="354" stroke={sand500} strokeWidth="1.5" markerEnd="url(#arrowhead)" />
+      <text x="394" y="342" fontFamily={fontSans} fontSize="11" fill={sand700}>
+        {T.result}
       </text>
 
       {/* Layer 3 — Surfaces */}
       <g>
-        <rect
-          x="60"
-          y="360"
-          width="640"
-          height="130"
-          rx="14"
-          fill={sand50}
-          stroke={border}
-        />
-        <text
-          x="80"
-          y="388"
-          fontFamily={fontSans}
-          fontSize="11"
-          letterSpacing="2"
-          fill={sand500}
-        >
-          LAYER 3
+        <rect x="60" y="360" width="640" height="130" rx="14" fill={sand50} stroke={border} />
+        <text x="80" y="388" fontFamily={fontSans} fontSize="11" letterSpacing="2" fill={sand500}>
+          {T.layer3}
         </text>
-        <text
-          x="80"
-          y="414"
-          fontFamily={fontSans}
-          fontWeight="600"
-          fontSize="20"
-          fill={sand900}
-        >
-          UX Surfaces
+        <text x="80" y="414" fontFamily={fontSans} fontWeight="600" fontSize="20" fill={sand900}>
+          {T.surfaces}
         </text>
 
-        {/* Surface cells */}
         <g>
           <rect x="80" y="430" width="115" height="40" rx="10" fill="#ffffff" stroke={border} />
           <text x="137.5" y="448" textAnchor="middle" fontFamily={fontSans} fontSize="12" fill={sand900}>
-            Patient
+            {T.patient}
           </text>
           <text x="137.5" y="463" textAnchor="middle" fontFamily={fontSans} fontSize="10" fill={sand500}>
-            bespoke
+            {T.bespoke}
           </text>
         </g>
         <g>
           <rect x="205" y="430" width="115" height="40" rx="10" fill="#ffffff" stroke={border} />
           <text x="262.5" y="448" textAnchor="middle" fontFamily={fontSans} fontSize="12" fill={sand900}>
-            Provider
+            {T.provider}
           </text>
           <text x="262.5" y="463" textAnchor="middle" fontFamily={fontSans} fontSize="10" fill={sand500}>
-            bespoke
+            {T.bespoke}
           </text>
         </g>
         <g>
           <rect x="330" y="430" width="115" height="40" rx="10" fill="#ffffff" stroke={border} />
           <text x="387.5" y="448" textAnchor="middle" fontFamily={fontSans} fontSize="12" fill={sand900}>
-            Kitchen partner
+            {T.kitchen}
           </text>
           <text x="387.5" y="463" textAnchor="middle" fontFamily={fontSans} fontSize="10" fill={sand500}>
-            mixed
+            {T.mixed}
           </text>
         </g>
         <g>
           <rect x="455" y="430" width="115" height="40" rx="10" fill={teal100} stroke={teal500} />
           <text x="512.5" y="448" textAnchor="middle" fontFamily={fontSans} fontSize="12" fontWeight="600" fill={sand900}>
-            Cena staff
+            {T.cenaStaff}
           </text>
           <text x="512.5" y="463" textAnchor="middle" fontFamily={fontMono} fontSize="10" fill={teal700}>
-            slack-first
+            {T.slackFirst}
           </text>
         </g>
         <g>
           <rect x="580" y="430" width="100" height="40" rx="10" fill="#ffffff" stroke={border} />
           <text x="630" y="448" textAnchor="middle" fontFamily={fontSans} fontSize="12" fill={sand900}>
-            Public
+            {T.public}
           </text>
           <text x="630" y="463" textAnchor="middle" fontFamily={fontSans} fontSize="10" fill={sand500}>
-            web
+            {T.web}
           </text>
         </g>
       </g>
 
-      {/* Caption */}
       <text
         x="380"
         y="510"
@@ -339,7 +258,7 @@ export function ThreeLayerStack({ className }: Props) {
         fill={sand500}
         fontStyle="italic"
       >
-        Surfaces send requests up · Orchestration dispatches across executors · Results return down
+        {T.caption}
       </text>
     </svg>
   );

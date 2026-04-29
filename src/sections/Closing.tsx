@@ -1,22 +1,33 @@
 import { MotifMark } from '../components/MotifMark';
 import { Reveal } from '../components/Reveal';
+import { t } from '../i18n/content';
+import type { Lang, SectionKey } from '../i18n/content';
 
-const proven = [
-  'System-level determinism over a non-deterministic LLM, via hooks + skills + rules',
-  'Multi-step orchestration with plan persistence across sessions',
-  'Expert dispatch into scoped sub-contexts',
-  'Memory hygiene that survives model upgrades',
+type Props = { lang: Lang };
+
+const provenKeys: SectionKey[] = [
+  'closing.proven1',
+  'closing.proven2',
+  'closing.proven3',
+  'closing.proven4',
 ];
 
-const projected = [
-  'Multi-user agentic operations (staff, partners, patients concurrently)',
-  'Clinical accountability boundaries — which decisions need a credentialed human',
-  'Multi-tenant data isolation and audit',
-  'Production reliability under load',
-  'Vendor-portable orchestration with multiple executor backends',
+const projectedKeys: SectionKey[] = [
+  'closing.projected1',
+  'closing.projected2',
+  'closing.projected3',
+  'closing.projected4',
+  'closing.projected5',
 ];
 
-export function Closing() {
+const alignKeys: SectionKey[] = [
+  'closing.align1',
+  'closing.align2',
+  'closing.align3',
+  'closing.align4',
+];
+
+export function Closing({ lang }: Props) {
   return (
     <Reveal as="section" className="py-20">
       <div className="flex items-center gap-2 mb-4">
@@ -30,7 +41,7 @@ export function Closing() {
             color: 'var(--color-text-faint)',
           }}
         >
-          Section 6 · honest framing
+          {t(lang, 'closing.section')}
         </span>
       </div>
       <h2
@@ -43,7 +54,7 @@ export function Closing() {
           color: 'var(--color-text-normal)',
         }}
       >
-        What&rsquo;s proven vs projected — and what we agree on
+        {t(lang, 'closing.title')}
       </h2>
 
       <div
@@ -55,9 +66,7 @@ export function Closing() {
           maxWidth: 720,
         }}
       >
-        <p>
-          Vault is the existence proof that the three-layer pattern works. It is not yet evidence that the pattern scales to clinical multi-user. That gap is real and is part of what makes Ava ambitious. Future architecture decisions should name which gap they close.
-        </p>
+        <p>{t(lang, 'closing.body1')}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-12">
@@ -77,18 +86,12 @@ export function Closing() {
               color: 'var(--color-primary)',
             }}
           >
-            Proven · today, in Vault
+            {t(lang, 'closing.provenLabel')}
           </span>
-          <ul
-            style={{
-              marginTop: 14,
-              paddingLeft: 0,
-              listStyle: 'none',
-            }}
-          >
-            {proven.map((p) => (
+          <ul style={{ marginTop: 14, paddingLeft: 0, listStyle: 'none' }}>
+            {provenKeys.map((k) => (
               <li
-                key={p}
+                key={k}
                 style={{
                   fontSize: 'var(--text-body-03)',
                   lineHeight: 1.5,
@@ -109,7 +112,7 @@ export function Closing() {
                 >
                   ✓
                 </span>
-                {p}
+                {t(lang, k)}
               </li>
             ))}
           </ul>
@@ -122,14 +125,11 @@ export function Closing() {
               fontStyle: 'italic',
             }}
           >
-            Single-user, single-tenant, single-machine — Aaron&rsquo;s solo workflow.
+            {t(lang, 'closing.provenFoot')}
           </p>
         </div>
 
-        <div
-          className="card-grouped"
-          style={{ padding: '24px 26px' }}
-        >
+        <div className="card-grouped" style={{ padding: '24px 26px' }}>
           <span
             style={{
               fontSize: 'var(--text-utility-overline)',
@@ -139,18 +139,12 @@ export function Closing() {
               color: 'var(--color-text-muted)',
             }}
           >
-            Projected · Ava goal, not yet built
+            {t(lang, 'closing.projectedLabel')}
           </span>
-          <ul
-            style={{
-              marginTop: 14,
-              paddingLeft: 0,
-              listStyle: 'none',
-            }}
-          >
-            {projected.map((p) => (
+          <ul style={{ marginTop: 14, paddingLeft: 0, listStyle: 'none' }}>
+            {projectedKeys.map((k) => (
               <li
-                key={p}
+                key={k}
                 style={{
                   fontSize: 'var(--text-body-03)',
                   lineHeight: 1.5,
@@ -171,7 +165,7 @@ export function Closing() {
                 >
                   ○
                 </span>
-                {p}
+                {t(lang, k)}
               </li>
             ))}
           </ul>
@@ -184,7 +178,7 @@ export function Closing() {
               fontStyle: 'italic',
             }}
           >
-            Multi-user, clinical, production — what the spike helps us close in on.
+            {t(lang, 'closing.projectedFoot')}
           </p>
         </div>
       </div>
@@ -206,7 +200,7 @@ export function Closing() {
             color: 'var(--color-primary)',
           }}
         >
-          What I&rsquo;d like us to align on
+          {t(lang, 'closing.alignLabel')}
         </span>
         <ol
           style={{
@@ -217,18 +211,11 @@ export function Closing() {
             lineHeight: 1.55,
           }}
         >
-          <li style={{ marginBottom: 6 }}>
-            The three-layer model — orchestration, execution, surfaces — is the shared frame.
-          </li>
-          <li style={{ marginBottom: 6 }}>
-            Orchestration is Cena-owned. Executors and surfaces are evaluated case by case.
-          </li>
-          <li style={{ marginBottom: 6 }}>
-            OpenClaw is on the table as an executor; the spike answers which roles it&rsquo;s feasible for.
-          </li>
-          <li>
-            We co-own the spike. Your hands-on experience plus the seven questions in section 5 produces the answer faster than either of us going alone.
-          </li>
+          {alignKeys.map((k) => (
+            <li key={k} style={{ marginBottom: 6 }}>
+              {t(lang, k)}
+            </li>
+          ))}
         </ol>
       </div>
     </Reveal>

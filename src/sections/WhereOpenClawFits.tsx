@@ -1,8 +1,12 @@
 import { MotifMark } from '../components/MotifMark';
 import { Reveal } from '../components/Reveal';
 import { OpenClawPositioning } from '../components/OpenClawPositioning';
+import { t } from '../i18n/content';
+import type { Lang } from '../i18n/content';
 
-export function WhereOpenClawFits() {
+type Props = { lang: Lang };
+
+export function WhereOpenClawFits({ lang }: Props) {
   return (
     <Reveal as="section" className="py-20">
       <div className="flex items-center gap-2 mb-4">
@@ -16,7 +20,7 @@ export function WhereOpenClawFits() {
             color: 'var(--color-text-faint)',
           }}
         >
-          Section 4 · OpenClaw
+          {t(lang, 'openclaw.section')}
         </span>
       </div>
       <h2
@@ -29,7 +33,7 @@ export function WhereOpenClawFits() {
           color: 'var(--color-text-normal)',
         }}
       >
-        Where OpenClaw sits — feasibility first, not dogma
+        {t(lang, 'openclaw.title')}
       </h2>
 
       <div
@@ -41,17 +45,19 @@ export function WhereOpenClawFits() {
           maxWidth: 720,
         }}
       >
+        <p>{t(lang, 'openclaw.body1')}</p>
         <p>
-          OpenClaw is on the table for any role where it meets our feasibility bar. The spike (next section) is how we test that, role by role. The only commitment up front is to evaluate from rationale, not dogma.
+          <strong>{t(lang, 'openclaw.body2Lead')}</strong>
+          {t(lang, 'openclaw.body2')}
         </p>
         <p>
-          <strong>Working hypothesis:</strong> the most natural fit is the Cena staff surface and the company-brain executor role — conversational access to corporate knowledge, deterministic onboarding and ingestion workflows, Slack as the entry point. Staff are technically literate, the data is internal, and OpenClaw&rsquo;s access model matches the audience.
-        </p>
-        <p>
-          <strong>Open question:</strong> whether OpenClaw can host the patient or provider surfaces under their regulatory, clinical, and accountability constraints. Default assumption is those surfaces are physically separate from staff, informed by the same corpus but optimized for their role. Whether OpenClaw runs underneath them depends on the spike.
+          <strong>{t(lang, 'openclaw.body3Lead')}</strong>
+          {t(lang, 'openclaw.body3')}
         </p>
         <p style={{ color: 'var(--color-text-muted)' }}>
-          What OpenClaw is <em>not</em>: the orchestrator. Layer 1 stays Cena-owned regardless of which platforms host the executors.
+          {t(lang, 'openclaw.body4Lead')}
+          <em>{t(lang, 'openclaw.body4Em')}</em>
+          {t(lang, 'openclaw.body4After')}
         </p>
       </div>
 
@@ -59,7 +65,7 @@ export function WhereOpenClawFits() {
         className="card-raised"
         style={{ padding: '28px', background: 'var(--color-surface-card)' }}
       >
-        <OpenClawPositioning />
+        <OpenClawPositioning lang={lang} />
       </div>
     </Reveal>
   );

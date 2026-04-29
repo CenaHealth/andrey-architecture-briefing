@@ -1,6 +1,10 @@
 import { MotifMark } from '../components/MotifMark';
+import { t } from '../i18n/content';
+import type { Lang } from '../i18n/content';
 
-export function Hero() {
+type Props = { lang: Lang };
+
+export function Hero({ lang }: Props) {
   return (
     <section
       className="relative w-full"
@@ -29,7 +33,7 @@ export function Hero() {
             margin: 0,
           }}
         >
-          Ava Architecture Briefing · for Andrey
+          {t(lang, 'hero.kicker')}
         </p>
         <h1
           style={{
@@ -43,9 +47,9 @@ export function Hero() {
             margin: '12px 0 0 0',
           }}
         >
-          Stop arguing platforms.
+          {t(lang, 'hero.headlineLine1')}
           <br />
-          Start naming layers.
+          {t(lang, 'hero.headlineLine2')}
         </h1>
         <p
           style={{
@@ -57,20 +61,20 @@ export function Hero() {
             marginTop: 20,
           }}
         >
-          Ava is one platform composed of three layers, each with a distinct job. Most platform debates reduce to confusion about which layer something belongs in. Naming the layers makes those debates resolvable.
+          {t(lang, 'hero.lede')}
         </p>
         <p
           style={{
             fontFamily: 'var(--font-sans)',
             fontSize: 'var(--text-body-02)',
-            lineHeight: 1.5,
+            lineHeight: 1.55,
             color: 'var(--color-text-muted)',
-            maxWidth: 560,
+            maxWidth: 580,
             marginTop: 18,
             fontStyle: 'italic',
           }}
         >
-          A walkthrough, not a wall of text. Read along; stop me anywhere.
+          {t(lang, 'hero.callout')}
         </p>
       </div>
     </section>

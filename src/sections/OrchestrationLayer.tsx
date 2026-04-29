@@ -1,34 +1,20 @@
 import { MotifMark } from '../components/MotifMark';
 import { Reveal } from '../components/Reveal';
+import { t } from '../i18n/content';
+import type { Lang, SectionKey } from '../i18n/content';
 
-const primitives = [
-  {
-    name: 'Triage gating',
-    body: 'Every request passes through a deterministic triage step before reaching an executor. Vault implements this as a UserPromptSubmit hook; in Ava it is whatever step our orchestrator runs first — not a model decision.',
-  },
-  {
-    name: 'Skill registry',
-    body: 'Deterministic procedures the orchestrator dispatches. Skills are not the brain — they are templates the brain selects and the executor runs. They constrain output to a known shape so the LLM&rsquo;s non-determinism does not propagate to the system level.',
-  },
-  {
-    name: 'Expert dispatch',
-    body: 'Calibrated personas with their own context, retro logs, and judgment patterns. Dispatched into scoped sub-contexts so the parent orchestrator does not drown.',
-  },
-  {
-    name: 'Plans (durable working state)',
-    body: 'Files on disk that survive context compaction and session boundaries. The orchestrator maintains a plan for any non-trivial task.',
-  },
-  {
-    name: 'Memory (durable cross-session state)',
-    body: 'What was learned previously. Loaded on demand; verified against current state before acting. Not the same as plans.',
-  },
-  {
-    name: 'Hook-style gating',
-    body: 'Deterministic checks the system runs around model calls — commit-scope enforcement, verify-time-sensitive-claims, and so on. Shell-level guarantees, not model promises.',
-  },
+type Props = { lang: Lang };
+
+const primitiveKeys: Array<{ name: SectionKey; body: SectionKey }> = [
+  { name: 'orch.prim1.name', body: 'orch.prim1.body' },
+  { name: 'orch.prim2.name', body: 'orch.prim2.body' },
+  { name: 'orch.prim3.name', body: 'orch.prim3.body' },
+  { name: 'orch.prim4.name', body: 'orch.prim4.body' },
+  { name: 'orch.prim5.name', body: 'orch.prim5.body' },
+  { name: 'orch.prim6.name', body: 'orch.prim6.body' },
 ];
 
-export function OrchestrationLayer() {
+export function OrchestrationLayer({ lang }: Props) {
   return (
     <Reveal as="section" className="py-20">
       <div className="flex items-center gap-2 mb-4">
@@ -42,7 +28,7 @@ export function OrchestrationLayer() {
             color: 'var(--color-text-faint)',
           }}
         >
-          Section 2 · what we own
+          {t(lang, 'orch.section')}
         </span>
       </div>
       <h2
@@ -55,7 +41,7 @@ export function OrchestrationLayer() {
           color: 'var(--color-text-normal)',
         }}
       >
-        The orchestration layer is Cena-owned. This is non-negotiable.
+        {t(lang, 'orch.title')}
       </h2>
 
       <div
@@ -67,16 +53,12 @@ export function OrchestrationLayer() {
           maxWidth: 720,
         }}
       >
-        <p>
-          Memory, tools, context, and orchestration logic live here regardless of which executor or surface we&rsquo;re talking to. The model — Claude, GPT, Gemini, OpenClaw-hosted, local — is swappable. The orchestration is not. This is what makes our vendor-independence stance real instead of aspirational.
-        </p>
-        <p style={{ color: 'var(--color-text-muted)' }}>
-          Without this layer, system-level reliability over a non-deterministic LLM is impossible. With it, we get the same behavior every time even when the leaf model is non-deterministic. Vault is the existence proof for the pattern (more on what&rsquo;s proven vs projected later).
-        </p>
+        <p>{t(lang, 'orch.body1')}</p>
+        <p style={{ color: 'var(--color-text-muted)' }}>{t(lang, 'orch.body2')}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {primitives.map((p) => (
+        {primitiveKeys.map((p) => (
           <div
             key={p.name}
             className="card"
@@ -94,7 +76,7 @@ export function OrchestrationLayer() {
                 margin: 0,
               }}
             >
-              {p.name}
+              {t(lang, p.name)}
             </h3>
             <p
               style={{
@@ -104,7 +86,7 @@ export function OrchestrationLayer() {
                 marginTop: 8,
                 marginBottom: 0,
               }}
-              dangerouslySetInnerHTML={{ __html: p.body }}
+              dangerouslySetInnerHTML={{ __html: t(lang, p.body) }}
             />
           </div>
         ))}
@@ -118,7 +100,7 @@ export function OrchestrationLayer() {
           maxWidth: 680,
         }}
       >
-        Skills are not brains. Skills are templates the brain selects and the executor runs. The combination is what produces system-level determinism over a non-deterministic LLM.
+        {t(lang, 'orch.callout')}
       </p>
     </Reveal>
   );

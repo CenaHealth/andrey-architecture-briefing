@@ -1,8 +1,12 @@
 import { MotifMark } from '../components/MotifMark';
 import { Reveal } from '../components/Reveal';
 import { ThreeLayerStack } from '../components/ThreeLayerStack';
+import { t } from '../i18n/content';
+import type { Lang } from '../i18n/content';
 
-export function ThreeLayers() {
+type Props = { lang: Lang };
+
+export function ThreeLayers({ lang }: Props) {
   return (
     <Reveal as="section" className="py-20">
       <div className="flex items-center gap-2 mb-4">
@@ -16,7 +20,7 @@ export function ThreeLayers() {
             color: 'var(--color-text-faint)',
           }}
         >
-          Section 1 · the model
+          {t(lang, 'three.section')}
         </span>
       </div>
       <h2
@@ -29,7 +33,7 @@ export function ThreeLayers() {
           color: 'var(--color-text-normal)',
         }}
       >
-        Three layers, three jobs
+        {t(lang, 'three.title')}
       </h2>
 
       <div
@@ -41,22 +45,16 @@ export function ThreeLayers() {
           maxWidth: 720,
         }}
       >
-        <p>
-          <strong>Orchestration</strong> is the brain — receives a request, decides whether it&rsquo;s a one-shot or needs orchestration, breaks the work into increments small enough for high-confidence execution, dispatches them, collects results, and assembles the response.
-        </p>
-        <p>
-          <strong>Execution</strong> is the hands — runs individual increments and returns results. LLM API calls, agent platforms (OpenClaw, others), deterministic code, integrations, and human-in-the-loop steps are all executors. The orchestrator picks which to use.
-        </p>
-        <p>
-          <strong>UX surface</strong> is the face — how a specific role (patient, provider, kitchen partner, Cena staff, public) actually interacts. Surfaces are physically separate from each other.
-        </p>
+        <p dangerouslySetInnerHTML={{ __html: t(lang, 'three.bodyOrch') }} />
+        <p dangerouslySetInnerHTML={{ __html: t(lang, 'three.bodyExec') }} />
+        <p dangerouslySetInnerHTML={{ __html: t(lang, 'three.bodySurface') }} />
       </div>
 
       <div
         className="card-raised"
         style={{ padding: '28px', background: 'var(--color-surface-card)' }}
       >
-        <ThreeLayerStack />
+        <ThreeLayerStack lang={lang} />
       </div>
     </Reveal>
   );

@@ -1,8 +1,12 @@
 import { MotifMark } from '../components/MotifMark';
 import { Reveal } from '../components/Reveal';
 import { SurfaceSeparation } from '../components/SurfaceSeparation';
+import { t } from '../i18n/content';
+import type { Lang } from '../i18n/content';
 
-export function SurfacesAreSeparate() {
+type Props = { lang: Lang };
+
+export function SurfacesAreSeparate({ lang }: Props) {
   return (
     <Reveal as="section" className="py-20">
       <div className="flex items-center gap-2 mb-4">
@@ -16,7 +20,7 @@ export function SurfacesAreSeparate() {
             color: 'var(--color-text-faint)',
           }}
         >
-          Section 3 · surfaces
+          {t(lang, 'surfaces.section')}
         </span>
       </div>
       <h2
@@ -29,7 +33,7 @@ export function SurfacesAreSeparate() {
           color: 'var(--color-text-normal)',
         }}
       >
-        Surfaces are physically separate. The corpus is shared.
+        {t(lang, 'surfaces.title')}
       </h2>
 
       <div
@@ -41,22 +45,16 @@ export function SurfacesAreSeparate() {
           maxWidth: 720,
         }}
       >
-        <p>
-          Patients, providers, kitchen partners, and Cena staff each get their own surface. They look different, behave differently, and meet different regulatory and accessibility requirements. None of them is the same surface as another.
-        </p>
-        <p>
-          What they share is the corpus underneath — Cena&rsquo;s knowledge, processes, positions, audit trail, identity. Same data, different roles, separated implementations. Separation lets each surface optimize for its role&rsquo;s constraints without the others&rsquo; constraints leaking in.
-        </p>
-        <p style={{ color: 'var(--color-text-muted)' }}>
-          A surface choice does not determine the orchestrator. Multiple surfaces can dispatch to the same orchestration layer; that&rsquo;s the point.
-        </p>
+        <p>{t(lang, 'surfaces.body1')}</p>
+        <p>{t(lang, 'surfaces.body2')}</p>
+        <p style={{ color: 'var(--color-text-muted)' }}>{t(lang, 'surfaces.body3')}</p>
       </div>
 
       <div
         className="card-raised"
         style={{ padding: '28px', background: 'var(--color-surface-card)' }}
       >
-        <SurfaceSeparation />
+        <SurfaceSeparation lang={lang} />
       </div>
     </Reveal>
   );

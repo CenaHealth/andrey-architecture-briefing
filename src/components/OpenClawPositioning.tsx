@@ -1,4 +1,6 @@
-type Props = { className?: string };
+import type { Lang } from '../i18n/content';
+
+type Props = { className?: string; lang: Lang };
 
 const sand900 = 'var(--color-sand-900)';
 const sand700 = 'var(--color-sand-700)';
@@ -11,18 +13,73 @@ const border = 'var(--color-border-default)';
 const fontSans = 'var(--font-sans)';
 const fontMono = 'var(--font-mono)';
 
-/**
- * OpenClaw positioning. Cena-owned orchestrator at top dispatches to multiple
- * executors. OpenClaw is highlighted as one option, with a confident link to
- * the staff surface and dotted "open question" links to patient/provider.
- */
-export function OpenClawPositioning({ className }: Props) {
+const txt = {
+  en: {
+    orchHeader: 'ORCHESTRATION · CENA-OWNED',
+    orchTagline: 'Decides what · breaks it down · dispatches · assembles',
+    llmApi: 'LLM API',
+    llmSub: 'Claude, GPT, others',
+    llmTag: 'MODEL CALLS',
+    openclaw: 'OpenClaw',
+    openclawSub: 'agent platform + Slack',
+    openclawTag: 'CANDIDATE',
+    code: 'Code · DB · APIs',
+    codeSub: 'deterministic logic',
+    codeTag: 'PORTABLE',
+    human: 'Human',
+    humanSub: 'accountable steps',
+    humanTag: 'IN-LOOP',
+    patient: 'Patient',
+    patientSub: 'bespoke surface',
+    provider: 'Provider',
+    providerSub: 'bespoke surface',
+    cenaStaff: 'Cena staff',
+    cenaTag: 'SLACK · NATURAL FIT',
+    public: 'Public',
+    publicSub: 'web',
+    strongFit: 'strong fit',
+    legendHypothesis: 'Working hypothesis',
+    legendOpen: 'Open question — depends on the spike',
+    caption: 'OpenClaw is one executor among several · evaluated against role-specific feasibility',
+  },
+  ru: {
+    orchHeader: 'ОРКЕСТРАЦИЯ · ЗА CENA',
+    orchTagline: 'Решает что · разбивает · направляет · компонует',
+    llmApi: 'LLM API',
+    llmSub: 'Claude, GPT, и другие',
+    llmTag: 'ВЫЗОВЫ МОДЕЛИ',
+    openclaw: 'OpenClaw',
+    openclawSub: 'агентная платформа + Slack',
+    openclawTag: 'КАНДИДАТ',
+    code: 'Код · БД · API',
+    codeSub: 'детерминированная логика',
+    codeTag: 'ПЕРЕНОСИМО',
+    human: 'Человек',
+    humanSub: 'подотчётные шаги',
+    humanTag: 'В ЦИКЛЕ',
+    patient: 'Пациент',
+    patientSub: 'своя поверхность',
+    provider: 'Врач',
+    providerSub: 'своя поверхность',
+    cenaStaff: 'Сотрудник Cena',
+    cenaTag: 'SLACK · ЕСТЕСТВЕННО',
+    public: 'Публика',
+    publicSub: 'web',
+    strongFit: 'сильное соответствие',
+    legendHypothesis: 'Рабочая гипотеза',
+    legendOpen: 'Открытый вопрос — зависит от спайка',
+    caption: 'OpenClaw — один из нескольких исполнителей · оценивается по ролевой осуществимости',
+  },
+} as const;
+
+export function OpenClawPositioning({ className, lang }: Props) {
+  const T = txt[lang];
   return (
     <svg
       className={className}
       viewBox="0 0 760 520"
       role="img"
-      aria-label="OpenClaw positioned as one of several executors. Strong link to staff surface; open-question links to patient and provider surfaces."
+      aria-label={T.caption}
       style={{ width: '100%', height: 'auto', display: 'block' }}
     >
       <defs>
@@ -39,32 +96,16 @@ export function OpenClawPositioning({ className }: Props) {
         </marker>
       </defs>
 
-      {/* Orchestrator (Cena-owned, slim header bar) */}
       <g>
         <rect x="60" y="30" width="640" height="62" rx="12" fill={teal700} />
-        <text
-          x="80"
-          y="54"
-          fontFamily={fontSans}
-          fontSize="11"
-          letterSpacing="2"
-          fill={teal100}
-        >
-          ORCHESTRATION · CENA-OWNED
+        <text x="80" y="54" fontFamily={fontSans} fontSize="11" letterSpacing="2" fill={teal100}>
+          {T.orchHeader}
         </text>
-        <text
-          x="80"
-          y="80"
-          fontFamily={fontSans}
-          fontWeight="600"
-          fontSize="18"
-          fill="#ffffff"
-        >
-          Decides what · breaks it down · dispatches · assembles
+        <text x="80" y="80" fontFamily={fontSans} fontWeight="600" fontSize="18" fill="#ffffff">
+          {T.orchTagline}
         </text>
       </g>
 
-      {/* Down arrows from orchestrator to executors */}
       {[160, 320, 480, 620].map((x, i) => (
         <line
           key={i}
@@ -78,172 +119,110 @@ export function OpenClawPositioning({ className }: Props) {
         />
       ))}
 
-      {/* Executors row */}
       <g>
-        {/* LLM API */}
         <rect x="80" y="142" width="160" height="76" rx="12" fill="#ffffff" stroke={border} />
         <text x="160" y="170" textAnchor="middle" fontFamily={fontSans} fontWeight="600" fontSize="14" fill={sand900}>
-          LLM API
+          {T.llmApi}
         </text>
         <text x="160" y="190" textAnchor="middle" fontFamily={fontSans} fontSize="11" fill={sand700}>
-          Claude, GPT, others
+          {T.llmSub}
         </text>
         <text x="160" y="206" textAnchor="middle" fontFamily={fontMono} fontSize="10" fill={sand500} letterSpacing="1">
-          MODEL CALLS
+          {T.llmTag}
         </text>
 
-        {/* OpenClaw — highlighted */}
-        <rect
-          x="240"
-          y="142"
-          width="160"
-          height="76"
-          rx="12"
-          fill={teal100}
-          stroke={teal500}
-          strokeWidth="1.5"
-        />
+        <rect x="240" y="142" width="160" height="76" rx="12" fill={teal100} stroke={teal500} strokeWidth="1.5" />
         <text x="320" y="170" textAnchor="middle" fontFamily={fontSans} fontWeight="600" fontSize="14" fill={sand900}>
-          OpenClaw
+          {T.openclaw}
         </text>
         <text x="320" y="190" textAnchor="middle" fontFamily={fontSans} fontSize="11" fill={teal700}>
-          agent platform + Slack
+          {T.openclawSub}
         </text>
         <text x="320" y="206" textAnchor="middle" fontFamily={fontMono} fontSize="10" fill={teal700} letterSpacing="1">
-          CANDIDATE
+          {T.openclawTag}
         </text>
 
-        {/* Code/DB/APIs */}
         <rect x="400" y="142" width="160" height="76" rx="12" fill="#ffffff" stroke={border} />
         <text x="480" y="170" textAnchor="middle" fontFamily={fontSans} fontWeight="600" fontSize="14" fill={sand900}>
-          Code · DB · APIs
+          {T.code}
         </text>
         <text x="480" y="190" textAnchor="middle" fontFamily={fontSans} fontSize="11" fill={sand700}>
-          deterministic logic
+          {T.codeSub}
         </text>
         <text x="480" y="206" textAnchor="middle" fontFamily={fontMono} fontSize="10" fill={sand500} letterSpacing="1">
-          PORTABLE
+          {T.codeTag}
         </text>
 
-        {/* Human */}
         <rect x="560" y="142" width="120" height="76" rx="12" fill="#ffffff" stroke={border} />
         <text x="620" y="170" textAnchor="middle" fontFamily={fontSans} fontWeight="600" fontSize="14" fill={sand900}>
-          Human
+          {T.human}
         </text>
         <text x="620" y="190" textAnchor="middle" fontFamily={fontSans} fontSize="11" fill={sand700}>
-          accountable steps
+          {T.humanSub}
         </text>
         <text x="620" y="206" textAnchor="middle" fontFamily={fontMono} fontSize="10" fill={sand500} letterSpacing="1">
-          IN-LOOP
+          {T.humanTag}
         </text>
       </g>
 
-      {/* Surfaces row, lower */}
       <g>
-        {/* Patient */}
         <rect x="80" y="380" width="120" height="62" rx="12" fill="#ffffff" stroke={border} />
         <text x="140" y="408" textAnchor="middle" fontFamily={fontSans} fontWeight="600" fontSize="13" fill={sand900}>
-          Patient
+          {T.patient}
         </text>
         <text x="140" y="426" textAnchor="middle" fontFamily={fontSans} fontSize="10" fill={sand500}>
-          bespoke surface
+          {T.patientSub}
         </text>
 
-        {/* Provider */}
         <rect x="220" y="380" width="120" height="62" rx="12" fill="#ffffff" stroke={border} />
         <text x="280" y="408" textAnchor="middle" fontFamily={fontSans} fontWeight="600" fontSize="13" fill={sand900}>
-          Provider
+          {T.provider}
         </text>
         <text x="280" y="426" textAnchor="middle" fontFamily={fontSans} fontSize="10" fill={sand500}>
-          bespoke surface
+          {T.providerSub}
         </text>
 
-        {/* Cena staff — accent */}
         <rect x="380" y="380" width="160" height="62" rx="12" fill={teal100} stroke={teal500} strokeWidth="1.5" />
         <text x="460" y="408" textAnchor="middle" fontFamily={fontSans} fontWeight="600" fontSize="13" fill={sand900}>
-          Cena staff
+          {T.cenaStaff}
         </text>
         <text x="460" y="426" textAnchor="middle" fontFamily={fontMono} fontSize="10" fill={teal700} letterSpacing="1">
-          SLACK · NATURAL FIT
+          {T.cenaTag}
         </text>
 
-        {/* Public */}
         <rect x="560" y="380" width="120" height="62" rx="12" fill="#ffffff" stroke={border} />
         <text x="620" y="408" textAnchor="middle" fontFamily={fontSans} fontWeight="600" fontSize="13" fill={sand900}>
-          Public
+          {T.public}
         </text>
         <text x="620" y="426" textAnchor="middle" fontFamily={fontSans} fontSize="10" fill={sand500}>
-          web
+          {T.publicSub}
         </text>
       </g>
 
-      {/* Connections from OpenClaw down to surfaces */}
-      {/* Strong connection to Cena staff */}
-      <path
-        d="M 320 218 C 320 300 460 300 460 380"
-        fill="none"
-        stroke={teal500}
-        strokeWidth="2"
-      />
-      <text
-        x="395"
-        y="296"
-        fontFamily={fontSans}
-        fontSize="11"
-        fill={teal700}
-        fontWeight="600"
-      >
-        strong fit
+      <path d="M 320 218 C 320 300 460 300 460 380" fill="none" stroke={teal500} strokeWidth="2" />
+      <text x="395" y="296" fontFamily={fontSans} fontSize="11" fill={teal700} fontWeight="600">
+        {T.strongFit}
       </text>
 
-      {/* Open question — to provider */}
-      <path
-        d="M 320 218 C 320 300 280 300 280 380"
-        fill="none"
-        stroke={sand500}
-        strokeWidth="1.2"
-        strokeDasharray="4 4"
-      />
-      <text
-        x="240"
-        y="296"
-        fontFamily={fontSans}
-        fontSize="11"
-        fill={sand700}
-        fontStyle="italic"
-      >
+      <path d="M 320 218 C 320 300 280 300 280 380" fill="none" stroke={sand500} strokeWidth="1.2" strokeDasharray="4 4" />
+      <text x="240" y="296" fontFamily={fontSans} fontSize="11" fill={sand700} fontStyle="italic">
         ?
       </text>
 
-      {/* Open question — to patient */}
-      <path
-        d="M 320 218 C 320 320 140 320 140 380"
-        fill="none"
-        stroke={sand500}
-        strokeWidth="1.2"
-        strokeDasharray="4 4"
-      />
-      <text
-        x="105"
-        y="316"
-        fontFamily={fontSans}
-        fontSize="11"
-        fill={sand700}
-        fontStyle="italic"
-      >
+      <path d="M 320 218 C 320 320 140 320 140 380" fill="none" stroke={sand500} strokeWidth="1.2" strokeDasharray="4 4" />
+      <text x="105" y="316" fontFamily={fontSans} fontSize="11" fill={sand700} fontStyle="italic">
         ?
       </text>
 
-      {/* Legend */}
       <g transform="translate(60, 462)">
         <line x1="0" y1="6" x2="20" y2="6" stroke={teal500} strokeWidth="2" />
         <text x="28" y="10" fontFamily={fontSans} fontSize="11" fill={sand700}>
-          Working hypothesis
+          {T.legendHypothesis}
         </text>
 
-        <line x1="170" y1="6" x2="190" y2="6" stroke={sand500} strokeWidth="1.2" strokeDasharray="4 4" />
-        <text x="198" y="10" fontFamily={fontSans} fontSize="11" fill={sand700}>
-          Open question — depends on the spike
+        <line x1="180" y1="6" x2="200" y2="6" stroke={sand500} strokeWidth="1.2" strokeDasharray="4 4" />
+        <text x="208" y="10" fontFamily={fontSans} fontSize="11" fill={sand700}>
+          {T.legendOpen}
         </text>
       </g>
 
@@ -256,7 +235,7 @@ export function OpenClawPositioning({ className }: Props) {
         fill={sand500}
         fontStyle="italic"
       >
-        OpenClaw is one executor among several · evaluated against role-specific feasibility
+        {T.caption}
       </text>
     </svg>
   );
